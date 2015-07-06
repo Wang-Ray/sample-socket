@@ -1,17 +1,18 @@
-package com.allinpay.framework.socket.netty;
+package com.allinpay.io.socket.netty;
+
+import java.net.SocketAddress;
 
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
-
-import java.net.SocketAddress;
+import io.netty.channel.ChannelHandler.Skip;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NettyServerChildHandler1 extends ChannelHandlerAdapter {
+public class NettyClientHandler1 extends ChannelHandlerAdapter {
 
-	private static final Logger logger = LoggerFactory.getLogger(NettyServerChildHandler1.class);
+	private static final Logger logger = LoggerFactory.getLogger(NettyClientHandler1.class);
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
@@ -36,6 +37,7 @@ public class NettyServerChildHandler1 extends ChannelHandlerAdapter {
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		logger.debug("channelInactive");
+		ctx.connect(ctx.channel().remoteAddress());
 		ctx.fireChannelInactive();
 	}
 
@@ -80,6 +82,8 @@ public class NettyServerChildHandler1 extends ChannelHandlerAdapter {
 		ctx.disconnect();
 	}
 
+	// 跳过
+	@Skip
 	@Override
 	public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
 		logger.debug("close");
