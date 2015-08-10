@@ -23,9 +23,9 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
 	 * Creates a client-side handler.
 	 */
 	public NettyClientHandler() {
-		byte[] req = "QUERY TIME ORDER".getBytes();
+		byte[] req = "0016QUERY TIME ORDER".getBytes();
 		firstMessage = Unpooled.buffer(req.length);
-		firstMessage.writeShort(16);
+//		firstMessage.writeShort(16);
 		firstMessage.writeBytes(req);
 
 	}

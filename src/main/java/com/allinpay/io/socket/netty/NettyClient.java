@@ -52,7 +52,7 @@ public class NettyClient {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		int port = 8081;
+		int port = 8091;
 		if (args != null && args.length > 0) {
 			try {
 				port = Integer.valueOf(args[0]);
@@ -60,6 +60,6 @@ public class NettyClient {
 				// 采用默认值
 			}
 		}
-		new NettyClient().connect(port, "127.0.0.1");
+		new NettyClient().connect(port, "192.168.107.203");
 	}
 }

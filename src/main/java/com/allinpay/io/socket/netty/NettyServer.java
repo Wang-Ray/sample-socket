@@ -26,7 +26,7 @@ public class NettyServer {
 						@Override
 						public void initChannel(SocketChannel ch) throws Exception {
 							ch.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG))
-									.addLast(new LengthFieldBasedFrameDecoder(1024, 0, 2, 0, 2))
+									.addLast(new AsciiLengthFieldBasedFrameDecoder(1024, 0, 4, 0, 4))
 //									.addLast(new StringEncoder())
 									.addLast(new NettyServerHandler());
 						}
@@ -55,7 +55,7 @@ public class NettyServer {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		int port = 8081;
+		int port = 8091;
 		if (args != null && args.length > 0) {
 			try {
 				port = Integer.valueOf(args[0]);
