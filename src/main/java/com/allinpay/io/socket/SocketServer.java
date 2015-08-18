@@ -9,6 +9,7 @@ public class SocketServer {
 
 	public static void main(String[] args) {
 		String s = null;
+		// 服务端监听
 		ServerSocket serverSocket = null;
 		// 一个Socket对象对应一个连接
 		Socket socketServer = null;
