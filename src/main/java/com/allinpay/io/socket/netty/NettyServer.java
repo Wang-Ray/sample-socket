@@ -16,11 +16,11 @@ public class NettyServer {
 
 	public void bind(int port) throws Exception {
 		// 配置服务端的NIO线程组
-		EventLoopGroup bossGroup = new NioEventLoopGroup();
-		EventLoopGroup workerGroup = new NioEventLoopGroup();
+		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+//		EventLoopGroup workerGroup = new NioEventLoopGroup(1);
 		try {
 			ServerBootstrap b = new ServerBootstrap();
-			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
+			b.group(bossGroup, bossGroup).channel(NioServerSocketChannel.class)
 					.option(ChannelOption.SO_BACKLOG, 1024).handler(new LoggingHandler(LogLevel.DEBUG))
 					.childHandler(new ChannelInitializer<SocketChannel>() {
 						@Override
@@ -46,7 +46,7 @@ public class NettyServer {
 		} finally {
 			// 优雅退出，释放线程池资源
 			bossGroup.shutdownGracefully();
-			workerGroup.shutdownGracefully();
+//			workerGroup.shutdownGracefully();
 		}
 	}
 

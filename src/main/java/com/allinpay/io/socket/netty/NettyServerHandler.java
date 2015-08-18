@@ -47,6 +47,9 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
 		buf.readBytes(req);
 		String body = new String(req);
 		System.out.println("The time server receive order : " + body);
+		if("a".equals(body)){
+			Thread.sleep(60*1000);
+		}
 		String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? new java.util.Date(System.currentTimeMillis())
 				.toString() : "BAD ORDER";
 		ByteBuf resp = Unpooled.copiedBuffer(currentTime.getBytes());

@@ -35,9 +35,9 @@ public class NettyClient {
 			ChannelFuture f = b.connect(host, port).sync();
 
 			// 等待客户端链路关闭
-			 f.channel().closeFuture().sync();
+//			 f.channel().closeFuture().sync();
 
-//			 Thread.sleep(10*1000);
+			 Thread.sleep(2*1000);
 //			 f.channel().close().sync();
 			// f.channel().disconnect().sync();
 			// Thread.sleep(30*1000);
@@ -60,6 +60,13 @@ public class NettyClient {
 				// 采用默认值
 			}
 		}
-		new NettyClient().connect(port, "192.168.107.203");
+//		new NettyClient().connect(port, "192.168.107.203");
+//		new NettyClient().connect(port, "192.168.103.13");
+		int i = 0;
+		while(i<200){
+			new NettyClient().connect(port, "localhost");
+			i++;
+		}
+		
 	}
 }

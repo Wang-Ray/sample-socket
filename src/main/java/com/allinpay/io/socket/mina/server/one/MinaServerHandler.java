@@ -1,4 +1,4 @@
-package com.allinpay.io.socket.mina;
+package com.allinpay.io.socket.mina.server.one;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
@@ -38,9 +38,9 @@ public class MinaServerHandler extends IoHandlerAdapter {
 		// 测试将消息回送给客户端
 //		if (count == 1)
 //			return;
-		if("a".equals(s)){
-			Thread.sleep(60*1000);
-		}
+//		if("a".equals(s)){
+//			Thread.sleep(60*1000);
+//		}
 		session.write(s + count);
 		count++;
 	}

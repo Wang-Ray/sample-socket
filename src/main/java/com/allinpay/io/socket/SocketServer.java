@@ -2,6 +2,7 @@ package com.allinpay.io.socket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,7 +18,8 @@ public class SocketServer {
 		DataOutputStream out = null;
 
 		try {
-			serverSocket = new ServerSocket(4331);
+			serverSocket = new ServerSocket();
+			serverSocket.bind(new InetSocketAddress(4331), 20);
 
 			// 建立连接即完成Socket对象的创建
 			socketServer = serverSocket.accept();

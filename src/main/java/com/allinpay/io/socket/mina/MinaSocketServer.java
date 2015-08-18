@@ -16,7 +16,7 @@ public class MinaSocketServer {
 	
 	public static void main(String[] args) throws Exception {
 		// 创建一个非阻塞的Server端Socket,用NIO
-		SocketAcceptor acceptor = new NioSocketAcceptor();
+		SocketAcceptor acceptor = new NioSocketAcceptor(1);
 		// 创建接收数据的过滤器
 		DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();
 		// 设定这个过滤器将一行一行(/r/n)的读取数据
