@@ -14,6 +14,12 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 一个端口仅接收一个连接
+ * 
+ * @author Angi
+ *
+ */
 public class MinaSocketServer {
 
 	static Logger logger = LoggerFactory.getLogger(MinaSocketServer.class);
