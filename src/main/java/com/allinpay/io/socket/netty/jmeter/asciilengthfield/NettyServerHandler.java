@@ -45,7 +45,7 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
 //		String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? new java.util.Date(System.currentTimeMillis())
 //				.toString() : "BAD ORDER";
 		
-		ByteBuf length = Unpooled.copiedBuffer(("03").getBytes());
+		ByteBuf length = Unpooled.copiedBuffer(("0003").getBytes());
 		ctx.write(length);
 		ByteBuf resp = Unpooled.copiedBuffer(toByteArray("383838"));
 		ctx.writeAndFlush(resp);
