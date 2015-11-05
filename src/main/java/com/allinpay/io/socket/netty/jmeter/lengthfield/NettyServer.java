@@ -1,4 +1,4 @@
-package com.allinpay.io.socket.netty;
+package com.allinpay.io.socket.netty.jmeter.lengthfield;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -27,7 +27,7 @@ public class NettyServer {
 						public void initChannel(SocketChannel ch) throws Exception {
 							ch.pipeline()
 							.addLast(new LoggingHandler(LogLevel.DEBUG))
-									.addLast(new AsciiLengthFieldBasedFrameDecoder(1024, 0, 4, 0, 4))
+									.addLast(new LengthFieldBasedFrameDecoder(1024, 0, 2, 0, 2))
 //									.addLast(new StringEncoder())
 									.addLast(new NettyServerHandler());
 						}

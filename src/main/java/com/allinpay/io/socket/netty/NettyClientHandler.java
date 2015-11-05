@@ -17,7 +17,8 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(NettyClientHandler.class);
 
-	private final ByteBuf firstMessage;
+//	public static final byte[] req = "0016QUERY TIME ORDER".getBytes();
+	private ByteBuf firstMessage;
 
 	/**
 	 * Creates a client-side handler.
@@ -25,11 +26,11 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
 	public NettyClientHandler() {
 		byte[] req = "0016QUERY TIME ORDER".getBytes();
 		firstMessage = Unpooled.buffer(req.length);
-//		firstMessage.writeShort(16);
+		// firstMessage.writeShort(16);
 		firstMessage.writeBytes(req);
 
 	}
-	
+
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		logger.debug("exceptionCaught");
@@ -37,7 +38,7 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
 		logger.warn("Unexpected exception from downstream : " + cause);
 		ctx.close();
 	}
-	
+
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
 		logger.debug("channelRegistered");
@@ -47,10 +48,10 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) {
 		logger.debug("channelActive");
-		ctx.writeAndFlush(firstMessage);
-		
+//		ctx.writeAndFlush(firstMessage);
+
 	}
-	
+
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		logger.debug("channelInactive");
@@ -73,7 +74,7 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
 		// 继续传递
 		ctx.fireChannelReadComplete();
 	}
-	
+
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
 		logger.debug("userEventTriggered");
@@ -85,35 +86,32 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
 		logger.debug("channelWritabilityChanged");
 		ctx.fireChannelWritabilityChanged();
 	}
-	
+
 	@Override
 	@Skip
-    public void connect(
-            ChannelHandlerContext ctx,
-            SocketAddress remoteAddress, SocketAddress localAddress, ChannelPromise promise) throws Exception {
+	public void connect(ChannelHandlerContext ctx, SocketAddress remoteAddress, SocketAddress localAddress,
+			ChannelPromise promise) throws Exception {
 		logger.debug("connect");
 		ctx.connect(remoteAddress, localAddress, promise);
-		
-    }
+
+	}
 
 	@Override
 	public void disconnect(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
 		logger.debug("disconnect");
 		ctx.disconnect(promise);
 	}
-	
+
 	@Override
 	public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
 		logger.debug("close");
 		ctx.close(promise);
 	}
-	
+
 	@Override
 	public void flush(ChannelHandlerContext ctx) throws Exception {
 		logger.debug("flush");
 		ctx.flush();
 	}
-	
-
 
 }

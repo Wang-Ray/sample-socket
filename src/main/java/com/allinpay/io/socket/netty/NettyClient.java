@@ -1,6 +1,8 @@
 package com.allinpay.io.socket.netty;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -25,19 +27,26 @@ public class NettyClient {
 						@Override
 						public void initChannel(SocketChannel ch) throws Exception {
 							ch.pipeline()
-									.addLast(new LoggingHandler(LogLevel.DEBUG))
-									.addLast(new NettyClientHandler1(), new NettyClientHandler(),
-											new NettyClientHandler2());
+//									.addLast(new LoggingHandler(LogLevel.DEBUG))
+									.addLast(new AsciiLengthFieldBasedFrameDecoder(1024, 0, 4, 0, 4))
+									.addLast(new NettyClientHandler());
 						}
 					});
 
 			// 发起异步连接操作
 			ChannelFuture f = b.connect(host, port).sync();
+			
+			ByteBuf req;
+			// 循环发送
+//			while(true){
+				req = Unpooled.copiedBuffer(("0016QUERY TIME ORDER").getBytes());
+				f.channel().writeAndFlush(req);
+//			}
 
 			// 等待客户端链路关闭
-//			 f.channel().closeFuture().sync();
+			 f.channel().closeFuture().sync();
 
-			 Thread.sleep(2*1000);
+//			 Thread.sleep(2*1000);
 //			 f.channel().close().sync();
 			// f.channel().disconnect().sync();
 			// Thread.sleep(30*1000);
@@ -52,7 +61,7 @@ public class NettyClient {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		int port = 8091;
+		int port = 8099;
 		if (args != null && args.length > 0) {
 			try {
 				port = Integer.valueOf(args[0]);
@@ -62,11 +71,11 @@ public class NettyClient {
 		}
 //		new NettyClient().connect(port, "192.168.107.203");
 //		new NettyClient().connect(port, "192.168.103.13");
-		int i = 0;
-		while(i<200){
+//		int i = 0;
+//		while(i<200){
 			new NettyClient().connect(port, "localhost");
-			i++;
-		}
+//			i++;
+//		}
 		
 	}
 }
