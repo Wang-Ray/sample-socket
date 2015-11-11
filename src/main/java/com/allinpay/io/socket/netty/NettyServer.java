@@ -8,7 +8,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
@@ -56,14 +55,27 @@ public class NettyServer {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		int port = 8099;
-		if (args != null && args.length > 0) {
-			try {
-				port = Integer.valueOf(args[0]);
-			} catch (NumberFormatException e) {
-				// 采用默认值
-			}
-		}
-		new NettyServer().bind(port);
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				try {
+					new NettyServer().bind(8099);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}}).start();
+		
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				try {
+					new NettyServer().bind(8088);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}}).start();
 	}
 }

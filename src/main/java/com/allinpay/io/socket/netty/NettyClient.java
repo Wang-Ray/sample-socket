@@ -69,11 +69,11 @@ public class NettyClient {
 				// 采用默认值
 			}
 		}
-//		new NettyClient().connect(port, "192.168.107.203");
+		new NettyClient().connect(port, "192.168.107.203");
 //		new NettyClient().connect(port, "192.168.103.13");
 //		int i = 0;
 //		while(i<200){
-			new NettyClient().connect(port, "localhost");
+//			new NettyClient().connect(port, "localhost");
 //			i++;
 //		}
 		
