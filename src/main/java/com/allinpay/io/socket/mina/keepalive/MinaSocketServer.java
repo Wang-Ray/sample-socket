@@ -34,7 +34,9 @@ public class MinaSocketServer {
 		// 设定这个过滤器将一行一行(/r/n)的读取数据
 		chain.addLast("protocolCodecFilter", new ProtocolCodecFilter(new TextLineCodecFactory()));
 
-		ServerKeepAliveMessageFactoryImpl serverKeepAliveMessageFactoryImpl = new ServerKeepAliveMessageFactoryImpl();
+		KeepAliveMessageFactoryImpl serverKeepAliveMessageFactoryImpl = new KeepAliveMessageFactoryImpl();
+		serverKeepAliveMessageFactoryImpl.setHeartBeatRequest("ping");
+		serverKeepAliveMessageFactoryImpl.setHeartBeatResponse("pong");
 		KeepAliveFilter keepAliveFilter = new KeepAliveFilter(serverKeepAliveMessageFactoryImpl, IdleStatus.BOTH_IDLE);
 
 		// 心跳间隔
