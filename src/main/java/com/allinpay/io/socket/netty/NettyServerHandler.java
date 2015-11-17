@@ -46,7 +46,7 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
 		byte[] req = new byte[buf.readableBytes()];
 		buf.readBytes(req);
 		String body = new String(req);
-		logger.info("server received " + body);
+		logger.info("server received: " + body);
 		// if("a".equals(body)){
 		// Thread.sleep(60*1000);
 		// }

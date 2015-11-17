@@ -35,8 +35,10 @@ public class MinaSocketServer {
 		chain.addLast("protocolCodecFilter", new ProtocolCodecFilter(new TextLineCodecFactory()));
 
 		KeepAliveMessageFactoryImpl serverKeepAliveMessageFactoryImpl = new KeepAliveMessageFactoryImpl();
-		serverKeepAliveMessageFactoryImpl.setHeartBeatRequest("ping");
-		serverKeepAliveMessageFactoryImpl.setHeartBeatResponse("pong");
+		serverKeepAliveMessageFactoryImpl.setHeartBeatRequestSent("ping");
+		serverKeepAliveMessageFactoryImpl.setHeartBeatResponseReceived("pong");
+		serverKeepAliveMessageFactoryImpl.setHeartBeatRequestReceived("ping");
+		serverKeepAliveMessageFactoryImpl.setHeartBeatResponseSent("pong");
 		KeepAliveFilter keepAliveFilter = new KeepAliveFilter(serverKeepAliveMessageFactoryImpl, IdleStatus.BOTH_IDLE);
 
 		// 心跳间隔

@@ -15,8 +15,24 @@ public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 
 	static Logger logger = LoggerFactory.getLogger(KeepAliveMessageFactoryImpl.class);
 
-	private Object heartBeatRequest;
-	private Object heartBeatResponse;
+	/**
+	 * 发送心跳请求消息
+	 */
+	private Object heartBeatRequestSent;
+	/**
+	 * 接收心跳响应消息
+	 */
+	private Object heartBeatResponseReceived;
+
+	/**
+	 * 接收心跳请求消息
+	 */
+	private Object heartBeatRequestReceived;
+	/**
+	 * 发送心跳响应消息
+	 * 
+	 */
+	private Object heartBeatResponseSent;
 
 	/**
 	 * 获取需要发送的心跳包。<br/>
@@ -25,8 +41,8 @@ public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 	 */
 	@Override
 	public Object getRequest(IoSession session) {
-		logger.info("请求心跳包: " + heartBeatRequest);
-		return heartBeatRequest;
+		logger.info("请求心跳包: " + heartBeatRequestSent);
+		return heartBeatRequestSent;
 	}
 
 	/**
@@ -36,7 +52,7 @@ public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 	@Override
 	public boolean isResponse(IoSession session, Object message) {
 		logger.info("响应心跳包: " + message);
-		if (message.equals(heartBeatResponse))
+		if (message.equals(heartBeatResponseReceived))
 			return true;
 		return false;
 	}
@@ -47,7 +63,7 @@ public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 	@Override
 	public boolean isRequest(IoSession session, Object message) {
 		logger.info("请求心跳包: " + message);
-		if (message.equals(heartBeatRequest))
+		if (message.equals(heartBeatRequestReceived))
 			return true;
 		return false;
 	}
@@ -57,24 +73,40 @@ public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 	 */
 	@Override
 	public Object getResponse(IoSession session, Object request) {
-		logger.info("响应心跳包: " + heartBeatResponse);
-		return heartBeatResponse;
+		logger.info("响应心跳包: " + heartBeatResponseSent);
+		return heartBeatResponseSent;
 	}
 
-	public Object getHeartBeatRequest() {
-		return heartBeatRequest;
+	public Object getHeartBeatRequestSent() {
+		return heartBeatRequestSent;
 	}
 
-	public void setHeartBeatRequest(Object heartBeatRequest) {
-		this.heartBeatRequest = heartBeatRequest;
+	public void setHeartBeatRequestSent(Object heartBeatRequestSent) {
+		this.heartBeatRequestSent = heartBeatRequestSent;
 	}
 
-	public Object getHeartBeatResponse() {
-		return heartBeatResponse;
+	public Object getHeartBeatResponseReceived() {
+		return heartBeatResponseReceived;
 	}
 
-	public void setHeartBeatResponse(Object heartBeatResponse) {
-		this.heartBeatResponse = heartBeatResponse;
+	public void setHeartBeatResponseReceived(Object heartBeatResponseReceived) {
+		this.heartBeatResponseReceived = heartBeatResponseReceived;
+	}
+
+	public Object getHeartBeatRequestReceived() {
+		return heartBeatRequestReceived;
+	}
+
+	public void setHeartBeatRequestReceived(Object heartBeatRequestReceived) {
+		this.heartBeatRequestReceived = heartBeatRequestReceived;
+	}
+
+	public Object getHeartBeatResponseSent() {
+		return heartBeatResponseSent;
+	}
+
+	public void setHeartBeatResponseSent(Object heartBeatResponseSent) {
+		this.heartBeatResponseSent = heartBeatResponseSent;
 	}
 
 }
