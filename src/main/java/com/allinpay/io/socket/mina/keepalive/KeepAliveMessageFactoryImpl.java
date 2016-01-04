@@ -41,7 +41,7 @@ public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 	 */
 	@Override
 	public Object getRequest(IoSession session) {
-		logger.info("请求心跳包: " + heartBeatRequestSent);
+		logger.info("发送心跳请求消息: " + heartBeatRequestSent);
 		return heartBeatRequestSent;
 	}
 
@@ -51,7 +51,7 @@ public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 	 */
 	@Override
 	public boolean isResponse(IoSession session, Object message) {
-		logger.info("响应心跳包: " + message);
+		logger.info("接收心跳响应消息: " + message);
 		if (message.equals(heartBeatResponseReceived))
 			return true;
 		return false;
@@ -62,7 +62,7 @@ public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 	 */
 	@Override
 	public boolean isRequest(IoSession session, Object message) {
-		logger.info("请求心跳包: " + message);
+		logger.info("接收心跳请求消息: " + message);
 		if (message.equals(heartBeatRequestReceived))
 			return true;
 		return false;
@@ -73,7 +73,7 @@ public class KeepAliveMessageFactoryImpl implements KeepAliveMessageFactory {
 	 */
 	@Override
 	public Object getResponse(IoSession session, Object request) {
-		logger.info("响应心跳包: " + heartBeatResponseSent);
+		logger.info("发送心跳响应消息: " + heartBeatResponseSent);
 		return heartBeatResponseSent;
 	}
 
