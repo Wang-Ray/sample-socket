@@ -7,6 +7,7 @@ import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
 import org.apache.mina.filter.keepalive.KeepAliveFilter;
+import org.apache.mina.filter.keepalive.KeepAliveRequestTimeoutHandler;
 import org.apache.mina.transport.socket.SocketAcceptor;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.slf4j.Logger;
@@ -39,11 +40,11 @@ public class MinaSocketServer {
 		serverKeepAliveMessageFactoryImpl.setHeartBeatResponseReceived("pong");
 		serverKeepAliveMessageFactoryImpl.setHeartBeatRequestReceived("ping");
 		serverKeepAliveMessageFactoryImpl.setHeartBeatResponseSent("pong");
-		KeepAliveFilter keepAliveFilter = new KeepAliveFilter(serverKeepAliveMessageFactoryImpl, IdleStatus.BOTH_IDLE);
+		KeepAliveFilter keepAliveFilter = new KeepAliveFilter(serverKeepAliveMessageFactoryImpl, IdleStatus.BOTH_IDLE,KeepAliveRequestTimeoutHandler.LOG);
 
 		// 心跳间隔
 		keepAliveFilter.setRequestInterval(REQUEST_INTERVAL);
-		// 心跳响应超时时间
+		// 心跳响应超时时间,
 		keepAliveFilter.setRequestTimeout(REQUEST_TIMEOUT);
 
 		keepAliveFilter.setForwardEvent(true);

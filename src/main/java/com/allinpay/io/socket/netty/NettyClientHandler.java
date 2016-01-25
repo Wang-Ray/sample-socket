@@ -13,6 +13,8 @@ import io.netty.channel.ChannelHandler.Skip;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.allinpay.its.j8583.util.CodeUtil;
+
 public class NettyClientHandler extends ChannelHandlerAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(NettyClientHandler.class);
@@ -64,8 +66,8 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
 		ByteBuf buf = (ByteBuf) msg;
 		byte[] req = new byte[buf.readableBytes()];
 		buf.readBytes(req);
-		String body = new String(req, "UTF-8");
-		logger.info("client received : " + body);
+//		String body = new String(req, "UTF-8");
+		logger.info("client received : " + CodeUtil.byte2HexString(req));
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.allinpay.io.socket.mina.keepalive;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
+import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,15 @@ public class MinaServerHandler extends IoHandlerAdapter {
 			return;
 		session.write(s + count);
 		count++;
+	}
+
+	@Override
+	public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
+		logger.debug("*********************"+session.isConnected());
+		logger.debug("*********************"+session.isClosing());
+		logger.debug("*********************"+session.isBothIdle());
+		logger.debug("*********************"+session.isWriterIdle());
+		logger.debug("*********************"+session.isReaderIdle());
 	}
 
 	private int count = 0;

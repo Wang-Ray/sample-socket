@@ -1,5 +1,8 @@
 package com.allinpay.io.socket.mina;
 
+import org.apache.mina.core.future.IoFuture;
+import org.apache.mina.core.future.IoFutureListener;
+import org.apache.mina.core.future.WriteFuture;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
@@ -12,9 +15,38 @@ public class MinaClientHandler extends IoHandlerAdapter {
 	// 当一个连接建立时
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
-		session.write("client says：我来啦........");
 		logger.debug("connected:" + session.getRemoteAddress());
+
+		// 连续发送两条消息，服务端一次收到
+		WriteFuture wf1 = session.write("client says：我来啦1........");
+		logger.debug("client says：我来啦1........");
+		wf1.addListener(new IoFutureListener<IoFuture>() {
+			public void operationComplete(IoFuture future) {
+				logger.debug("future1 -- write completed!");
+			}
+		});
+
+		Thread.sleep(10 * 1000);
+		WriteFuture wf2 = session.write("client says：我来啦2........");
+		logger.debug("client says：我来啦2........");
+		wf2.addListener(new IoFutureListener<WriteFuture>() {
+			public void operationComplete(WriteFuture future) {
+				if (future.isWritten()) {
+					logger.info("Message send:");
+				} else {
+					logger.error("发送失败：" + "，原因：" + future.getException());
+				}
+			}
+		});
+
 	}
+
+	
+	@Override
+	public void messageSent(IoSession session, Object message) throws Exception {
+		logger.info("messageSent");
+	}
+
 
 	// 当一个连接关闭时
 	@Override
@@ -36,6 +68,6 @@ public class MinaClientHandler extends IoHandlerAdapter {
 		String s = (String) message;
 		logger.debug(s);
 		// 测试将消息回送给客户端
-		session.write(s);
+		// session.write(s);
 	}
 }
