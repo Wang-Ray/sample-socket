@@ -1,0 +1,38 @@
+package wang.angi.sample;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+
+public class SocketDataStreamClient {
+
+	public static void main(String[] args) {
+		String s = null;
+		// 一个Socket对象对应一个连接
+		Socket socketClient = null;
+		DataInputStream in = null;
+		DataOutputStream out = null;
+
+		try {
+			// 建立连接即完成Socket对象的创建
+			socketClient = new Socket();
+			socketClient.connect(new InetSocketAddress("localhost", 4331), 30 * 1000);
+			System.out.println("client connected to " + socketClient.getRemoteSocketAddress());
+			in = new DataInputStream(socketClient.getInputStream());
+			out = new DataOutputStream(socketClient.getOutputStream());
+
+			out.writeUTF("Hello, Server!");
+
+			while (true) {
+				s = in.readUTF();
+				System.out.println("SocketDataStreamClient received: " + s);
+				out.writeUTF("" + Math.random());
+				Thread.sleep(5000);
+			}
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
+}
